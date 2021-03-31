@@ -1,5 +1,5 @@
-# PPL4624
-1. A11.2017.10333 (Kun Amrin Amanu)
+# PPL4623
+1. A11.2017.10333 (Kun Amrin Amanu) (Ketua)
 2. A11.2017.10604 (Moh. Saifoelloh Noor)
 3. A11.2018.11396 (Wahyu Dwi Ramadhan)
 4. A11.2018.11367 (Novan Nurrohim)
