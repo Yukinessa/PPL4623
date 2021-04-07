@@ -22,5 +22,8 @@ Suatu aplikasi menghubungkan antara game designer dengan game publisher. Aplikas
 - Wireframe : Figma
 - Mockup : Figma
 
+## Link FIGMA (View Only)
+- https://www.figma.com/file/4f6IgtELmUGcMOTwG6TI15/Untitled?node-id=0%3A1
+
 ## Platform 
 - Web
