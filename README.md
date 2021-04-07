@@ -1,6 +1,6 @@
 # PPL4623
 
-## Product Name : Game Developer Connector
+## Product Name : Game Developer Connect
 
 ## Members
 
