@@ -4,11 +4,11 @@
 
 ## Members
 
-1. A11.2017.10333 (Kun Amrin Amanu) (Ketua)
+1. A11.2017.10333 (Kun Amrin Amanu) (Ketua & Programer)
 2. A11.2017.10604 (Moh. Saifoelloh Noor) (Project Manager)
-3. A11.2018.11396 (Wahyu Dwi Ramadhan) (Backend Developer)
-4. A11.2018.11367 (Novan Nurrohim) (UI/UX Designer)
-5. A11.2018.11385 (Dimas Inka Saputra) (Frontend Developer)
+3. A11.2018.11396 (Wahyu Dwi Ramadhan) (Programer)
+4. A11.2018.11367 (Novan Nurrohim) (System Analyst)
+5. A11.2018.11385 (Dimas Inka Saputra) (UI/UX Designer)
 
 ## Brief Description
 
