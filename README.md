@@ -1,14 +1,14 @@
-# PPL4623
+# PPL4623 Kelompok 1
 
 ## Product Name : Game Developer Connect
 
 ## Members
 
 1. A11.2017.10333 (Kun Amrin Amanu) (Ketua)
-2. A11.2017.10604 (Moh. Saifoelloh Noor)
-3. A11.2018.11396 (Wahyu Dwi Ramadhan)
-4. A11.2018.11367 (Novan Nurrohim)
-5. A11.2018.11385 (Dimas Inka Saputra)
+2. A11.2017.10604 (Moh. Saifoelloh Noor) (Project Manager)
+3. A11.2018.11396 (Wahyu Dwi Ramadhan) (Backend Developer)
+4. A11.2018.11367 (Novan Nurrohim) (UI/UX Designer)
+5. A11.2018.11385 (Dimas Inka Saputra) (Frontend Developer)
 
 ## Brief Description
 
