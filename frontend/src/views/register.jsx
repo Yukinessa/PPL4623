@@ -1,100 +1,82 @@
-import React from "react";
-
-import AuthLayout from "../components/layouts/AuthLayout";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import { Container, makeStyles, MenuItem, Paper } from "@material-ui/core";
+import {
+  Container,
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Grid,
+  makeStyles,
+} from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
-  backgroundImage: {
-    height: "100%",
-    backgroundColor: "#949494",
-  },
-  selectTextField: {
-    width: "257px",
+  button: {
+    textTransform: "none",
   },
 });
-
 function Register() {
   const classes = useStyles();
-
-  const roles = [
-    {
-      value: "Designer",
-      label: "Game Designer",
-    },
-    {
-      value: "Publisher",
-      label: "Game Publisher",
-    },
-  ];
-
   return (
-    <AuthLayout>
-      <Grid container spacing={1}>
-        <Grid item xs={6}>
-          <Paper className={classes.backgroundImage}></Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Container>
-            <Typography variant="h4" color="initial" align="center">
-              REGISTER
-            </Typography>
+    <Grid
+      container
+      direction="column"
+      alignItems="center"
+      justify="center"
+      style={{ minHeight: "100vh" }}
+    >
+      <Container maxWidth="xs">
+        <Box marginBottom={2}>
+          <Typography color="textPrimary" align="center" variant="h4">
+            Sign Up
+          </Typography>
+        </Box>
+        <form>
+          <Grid direction="column">
             <TextField
-              name="username"
-              label="Username"
-              margin="normal"
-              variant="outlined"
               fullWidth
+              label="Name"
+              margin="normal"
+              name="name"
+              type="text"
+              variant="outlined"
             />
             <TextField
-              name="email"
+              fullWidth
               label="Email"
               margin="normal"
+              name="email"
+              type="email"
               variant="outlined"
-              fullWidth
             />
             <TextField
-              name="password"
+              fullWidth
               label="Password"
               margin="normal"
+              name="password"
               type="password"
               variant="outlined"
-              fullWidth
             />
-            <TextField
-              name="role"
-              label="Register as "
-              margin="normal"
-              variant="outlined"
-              select
-              className={classes.selectTextField}
-            >
-              {roles.map((role) => (
-                <MenuItem key={role.value} value={role.value}>
-                  {role.label}
-                </MenuItem>
-              ))}
-            </TextField>
-            <Button variant="contained" color="default" fullWidth>
-              Continue
-            </Button>
-            <Typography align="center">
-              Already Have Account?{" "}
-              <Link
-                to="/login"
-                style={{ textDecoration: "none", color: "black" }}
+            <Box marginTop={3}>
+              <Button
+                color="primary"
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+                className={classes.button}
               >
-                Login
-              </Link>
-            </Typography>
-          </Container>
-        </Grid>
-      </Grid>
-    </AuthLayout>
+                Sign Up
+              </Button>
+              <Box marginTop={2}>
+                <Typography color="textSecondary">
+                  Already have an account? <Link to="/login">Login</Link>
+                </Typography>
+              </Box>
+            </Box>
+          </Grid>
+        </form>
+      </Container>
+    </Grid>
   );
 }
 
