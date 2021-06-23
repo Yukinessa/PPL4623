@@ -1,18 +1,26 @@
-import { Box, Typography, makeStyles } from "@material-ui/core";
+import { Flex, Text } from "@chakra-ui/react";
 
-const useStyle = makeStyles({
-  text: {
-    fontWeight: 400,
-  },
-});
-export default function Footer() {
-  const classes = useStyle();
+function Footer() {
   const year = new Date().getFullYear();
   return (
-    <Box textAlign="center" borderTop={1} borderColor="#bdc3c7" py={2}>
-      <Typography variant="body1" className={classes.text}>
-        Game Developer Connect &copy; {year}
-      </Typography>
-    </Box>
+    <Flex
+      as="footer"
+      direction="column"
+      bg="white"
+      px={["4", "16", "36"]}
+      pt="8"
+      pb="6"
+    >
+      <Text
+        textAlign="center"
+        fontSize="sm"
+        fontWeight="semibold"
+        color="gray.600"
+      >
+        &copy; {year} Game Developer Connect. All Right Reserved.
+      </Text>
+    </Flex>
   );
 }
+
+export default Footer;

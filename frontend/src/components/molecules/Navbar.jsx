@@ -1,61 +1,65 @@
-import React from "react";
-import { AppBar, IconButton, Box, Button, makeStyles } from "@material-ui/core";
-import { NavLink as RouterLink } from "react-router-dom";
-import { ReactComponent as LogoGDC } from "../../assets/icon/gdc-logo.svg";
+import { Flex, Heading, Button } from "@chakra-ui/react";
+import { getToken } from "../../helpers/token";
+import { Link, useHistory } from "react-router-dom";
 
-const menus = [
-  {
-    menu: "Help",
-    to: "/help",
-  },
-  {
-    menu: "Login",
-    to: "/login",
-  },
-];
-const useStyles = makeStyles({
-  button: {
-    fontSize: 16,
-    textTransform: "none",
-  },
-});
-export default function Navbar() {
-  const classes = useStyles();
+function Dekstop(props) {
+  const history = useHistory();
   return (
-    <AppBar position="static">
-      <Box
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
-        px={8}
-      >
-        <IconButton
-          width="40%"
-          height="40%"
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          component={RouterLink}
-          to="/"
-        >
-          <LogoGDC />
-        </IconButton>
-        <Box display="flex" flexDirection="row">
-          {menus.map((menu, index) => (
-            <Box key={index}>
-              <Button
-                component={RouterLink}
-                color="inherit"
-                className={classes.button}
-                to={menu.to}
-              >
-                {menu.menu}
-              </Button>
-            </Box>
-          ))}
-        </Box>
-      </Box>
-    </AppBar>
+    <Flex
+      as="nav"
+      bg="white"
+      px={["4", "16", "36"]}
+      py="3"
+      justify="space-between"
+      pos="fixed"
+      direction="row"
+      boxShadow="md"
+      w="full"
+    >
+      <Flex direction="column" alignSelf="center">
+        <Link to="/">
+          <Heading color="blue.500">gdc.</Heading>
+        </Link>
+      </Flex>
+      <Flex alignSelf="center">
+        {getToken() && (
+          <Link to="/dashboard">
+            <Button
+              variant="outline"
+              colorScheme="blue"
+              size="sm"
+              fontSize="xs"
+            >
+              Dashboard
+            </Button>
+          </Link>
+        )}
+        {!getToken() && (
+          <>
+            <Button
+              variant="outline"
+              colorScheme="blue"
+              size="sm"
+              fontSize="xs"
+              onClick={() => history.push("signin")}
+            >
+              Sign In
+            </Button>
+            <Button
+              ml="4"
+              display={["none", "flex"]}
+              size="sm"
+              fontSize="xs"
+              colorScheme="blue"
+              onClick={() => history.push("signup")}
+            >
+              Sign Up
+            </Button>
+          </>
+        )}
+      </Flex>
+    </Flex>
   );
 }
+
+export default Dekstop;
