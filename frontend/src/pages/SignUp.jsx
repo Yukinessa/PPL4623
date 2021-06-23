@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from "react"
 import {
   Flex,
   Stack,
@@ -18,26 +18,21 @@ import {
   Box,
   RadioGroup,
   Radio,
-} from "@chakra-ui/react";
-
-import {
-  MailIcon,
-  LockClosedIcon,
-  EyeIcon,
-  EyeOffIcon,
-  UserCircleIcon,
-} from "@heroicons/react/outline";
-import Joi from "joi";
-import { useForm } from "react-hook-form";
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useHistory } from "react-router-dom";
-import LoginImage from "../assets/register.png";
+} from "@chakra-ui/react"
+import { MailIcon, LockClosedIcon, EyeIcon, EyeOffIcon, UserCircleIcon } from "@heroicons/react/outline"
+import Joi from "joi"
+import { useForm } from "react-hook-form"
+import { joiResolver } from "@hookform/resolvers/joi"
+import { useHistory } from "react-router-dom"
+import { signUp } from "../api/auth"
+import { setToken } from "../helpers/token"
+import LoginImage from "../assets/register.png"
 
 function SignUp() {
-  const history = useHistory();
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState(null);
-  const [isLoading, setLoading] = useState(false);
+  const history = useHistory()
+  const [showPassword, setShowPassword] = useState(false)
+  const [error, setError] = useState(null)
+  const [isLoading, setLoading] = useState(false)
 
   const schema = Joi.object({
     name: Joi.string().required(),
@@ -45,8 +40,9 @@ function SignUp() {
       .email({ tlds: { allow: false } })
       .required(),
     password: Joi.string().min(8).required(),
+    role: Joi.string().required().default("designer"),
     acceptTerms: Joi.boolean().required(),
-  });
+  })
   const {
     register,
     formState: { errors },
@@ -55,40 +51,40 @@ function SignUp() {
     setValue,
   } = useForm({
     resolver: joiResolver(schema),
-  });
+  })
   const setEmpty = () => {
-    setValue("name", "");
-    setValue("email", "");
-    setValue("password", "");
-  };
+    setValue("name", "")
+    setValue("email", "")
+    setValue("password", "")
+    setValue("role", "")
+  }
+  const onSubmit = async (data) => {
+    setError(null)
+    setLoading(true)
+    const result = await signUp(data)
+    if (result.success === true) {
+      setLoading(false)
+      setEmpty()
+      setToken(Math.random().toString(36).substring(2))
+      history.push("/dashboard")
+    }
+  }
 
   return (
-    <Flex
-      px="4"
-      minH="100vh"
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-    >
+    <Flex px="4" minH="100vh" direction="column" justifyContent="center" alignItems="center">
       <Stack direction={["column", "row"]} w="full" maxW="container.lg">
         <Flex w="full" display={["none", "flex"]}>
           <Image src={LoginImage} />
         </Flex>
-        <Flex direction="column" alignSelf="center">
-          <Box
-            minW={["full", "sm"]}
-            py={["4", "6"]}
-            px={["4", "6", "8"]}
-            borderWidth="1px"
-            borderRadius="lg"
-          >
+        <Flex w={["full", "unset"]} direction="column" alignSelf="center">
+          <Box minW={["full", "sm"]} py={["4", "6"]} px={["4", "6", "8"]} borderWidth="1px" borderRadius="lg">
             <Stack direction="column">
               <Flex direction="column" align="center" mb="6">
                 <Text fontSize="md" color="gray.500">
                   Create an account
                 </Text>
               </Flex>
-              <form>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={4}>
                   {error && (
                     <Alert size="sm" status="error">
@@ -103,12 +99,7 @@ function SignUp() {
                       <InputLeftElement pointerEvents="none">
                         <Icon as={UserCircleIcon} color="gray.500" />
                       </InputLeftElement>
-                      <Input
-                        type="text"
-                        placeholder="Name"
-                        {...register("name")}
-                        isInvalid={errors.name}
-                      />
+                      <Input type="text" placeholder="Name" {...register("name")} isInvalid={errors.name} />
                     </InputGroup>
                     <Text fontSize="sm" color="red.500">
                       {errors.name?.message}
@@ -119,12 +110,7 @@ function SignUp() {
                       <InputLeftElement pointerEvents="none">
                         <Icon as={MailIcon} color="gray.500" />
                       </InputLeftElement>
-                      <Input
-                        type="text"
-                        placeholder="Email"
-                        {...register("email")}
-                        isInvalid={errors.email}
-                      />
+                      <Input type="text" placeholder="Email" {...register("email")} isInvalid={errors.email} />
                     </InputGroup>
                     <Text fontSize="sm" color="red.500">
                       {errors.email?.message}
@@ -141,21 +127,15 @@ function SignUp() {
                         {...register("password")}
                         isInvalid={errors.password}
                       />
-                      <InputRightElement
-                        cursor="pointer"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        <Icon
-                          as={showPassword ? EyeOffIcon : EyeIcon}
-                          color="gray.500"
-                        />
+                      <InputRightElement cursor="pointer" onClick={() => setShowPassword(!showPassword)}>
+                        <Icon as={showPassword ? EyeOffIcon : EyeIcon} color="gray.500" />
                       </InputRightElement>
                     </InputGroup>
                     <Text fontSize="sm" color="red.500">
                       {errors.password?.message}
                     </Text>
                   </FormControl>
-                  <RadioGroup size="md" defaultValue="designer">
+                  <RadioGroup size="md" defaultValue="designer" onChange={(value) => setValue("role", value)}>
                     <Stack spacing={5} direction="row" color="gray.600" px="1">
                       <Radio colorScheme="blue" value="designer">
                         <Text fontSize="sm">Designer</Text>
@@ -164,6 +144,9 @@ function SignUp() {
                         <Text fontSize="sm">Publisher</Text>
                       </Radio>
                     </Stack>
+                    <Text fontSize="sm" color="red.500">
+                      {errors.role?.message}
+                    </Text>
                   </RadioGroup>
                   <HStack justify="space-between" px="1">
                     <Checkbox {...register("acceptTerms")} colorScheme="blue">
@@ -178,6 +161,7 @@ function SignUp() {
                   w="full"
                   fontSize="sm"
                   colorScheme="blue"
+                  onClick={handleSubmit(onSubmit)}
                   isDisabled={isLoading || !watch("acceptTerms")}
                   isLoading={isLoading}
                   type="submit"
@@ -207,7 +191,7 @@ function SignUp() {
         </Flex>
       </Stack>
     </Flex>
-  );
+  )
 }
 
-export default SignUp;
+export default SignUp

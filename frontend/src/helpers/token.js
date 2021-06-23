@@ -4,8 +4,8 @@
  * @param {string} type
  */
 export const setToken = (token, type = "token") => {
-  localStorage.setItem(type, token);
-};
+  localStorage.setItem(type, token)
+}
 
 /**
  * getToken
@@ -13,13 +13,13 @@ export const setToken = (token, type = "token") => {
  * @returns {string}
  */
 export const getToken = (type = "token") => {
-  return localStorage.getItem(type);
-};
+  return localStorage.getItem(type)
+}
 
 /**
  * removeToken
  * @param {string} type
  */
 export const removeToken = (type = "token") => {
-  localStorage.removeItem(type);
-};
+  localStorage.removeItem(type)
+}

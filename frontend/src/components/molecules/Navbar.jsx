@@ -1,9 +1,9 @@
-import { Flex, Heading, Button } from "@chakra-ui/react";
-import { getToken } from "../../helpers/token";
-import { Link, useHistory } from "react-router-dom";
+import { Flex, Heading, Button } from "@chakra-ui/react"
+import { getToken } from "../../helpers/token"
+import { Link, useHistory } from "react-router-dom"
 
 function Dekstop(props) {
-  const history = useHistory();
+  const history = useHistory()
   return (
     <Flex
       as="nav"
@@ -24,25 +24,14 @@ function Dekstop(props) {
       <Flex alignSelf="center">
         {getToken() && (
           <Link to="/dashboard">
-            <Button
-              variant="outline"
-              colorScheme="blue"
-              size="sm"
-              fontSize="xs"
-            >
+            <Button variant="outline" colorScheme="blue" size="sm" fontSize="xs">
               Dashboard
             </Button>
           </Link>
         )}
         {!getToken() && (
           <>
-            <Button
-              variant="outline"
-              colorScheme="blue"
-              size="sm"
-              fontSize="xs"
-              onClick={() => history.push("signin")}
-            >
+            <Button variant="outline" colorScheme="blue" size="sm" fontSize="xs" onClick={() => history.push("signin")}>
               Sign In
             </Button>
             <Button
@@ -59,7 +48,7 @@ function Dekstop(props) {
         )}
       </Flex>
     </Flex>
-  );
+  )
 }
 
-export default Dekstop;
+export default Dekstop

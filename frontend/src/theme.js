@@ -1,4 +1,4 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme } from "@chakra-ui/react"
 
 const Input = {
   parts: ["field"],
@@ -21,6 +21,6 @@ const Input = {
   defaultProps: {
     variant: "outline",
   },
-};
+}
 
-export default extendTheme({ components: { Input } });
+export default extendTheme({ components: { Input } })

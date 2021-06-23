@@ -1,5 +1,5 @@
-import { Flex } from "@chakra-ui/react";
-import { Navbar, Footer } from "../molecules";
+import { Flex } from "@chakra-ui/react"
+import { Navbar, Footer } from "../molecules"
 
 function Home(props) {
   return (
@@ -8,7 +8,7 @@ function Home(props) {
       {props.children}
       <Footer />
     </Flex>
-  );
+  )
 }
 
-export default Home;
+export default Home
