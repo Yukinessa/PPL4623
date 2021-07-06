@@ -26,7 +26,7 @@ exports.getUserByEmail = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    errorResponse(res)(500);
+    errorResponse(res)(500, err.message);
   }
 };
 
