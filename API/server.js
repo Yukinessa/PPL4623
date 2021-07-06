@@ -3,9 +3,10 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const mainRoute = require("./src/routes");
+const port = process.env.PORT || 3000
 require("dotenv").config();
 
-const { CLIENT_APP_URL, APP_PORT } = process.env;
+const { CLIENT_APP_URL } = process.env;
 const app = express();
 const allowedOrigins = [
   CLIENT_APP_URL,
@@ -39,6 +40,6 @@ app.get("/", (req, res) =>
 
 app.use("/", mainRoute);
 
-app.listen(APP_PORT, () =>
-  console.log(`[LOG] you're app runnin on port ${APP_PORT}`)
+app.listen(port, () =>
+  console.log(`[LOG] you're app runnin on port ${port}`)
 );
