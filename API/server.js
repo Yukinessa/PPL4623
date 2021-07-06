@@ -5,7 +5,7 @@ const cors = require("cors");
 const mainRoute = require("./src/routes");
 require("dotenv").config();
 
-const { CLIENT_APP_URL, APP_PORT } = process.env;
+const { CLIENT_APP_URL, APP_PORT = 3000 } = process.env;
 const app = express();
 const allowedOrigins = [
   CLIENT_APP_URL,
