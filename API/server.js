@@ -3,16 +3,12 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const mainRoute = require("./src/routes");
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3000;
 require("dotenv").config();
 
 const { CLIENT_APP_URL } = process.env;
 const app = express();
-const allowedOrigins = [
-  CLIENT_APP_URL,
-  "http://localhost:3000",
-  "http://localhost:3001",
-];
+const allowedOrigins = [CLIENT_APP_URL, "http://localhost:3000"];
 
 app.use(
   cors({
@@ -40,6 +36,4 @@ app.get("/", (req, res) =>
 
 app.use("/", mainRoute);
 
-app.listen(port, () =>
-  console.log(`[LOG] you're app runnin on port ${port}`)
-);
+app.listen(port, () => console.log(`[LOG] you're app runnin on port ${port}`));
