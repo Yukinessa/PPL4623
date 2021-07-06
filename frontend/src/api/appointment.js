@@ -32,10 +32,9 @@ export const getAppointment = async (id) => {
 
 export const storeAppointment = async (data) => {
   try {
-    const { publisherId, designerId, projectId, meetDate, activity, information } = data
+    const { publisherId, projectId, meetDate, activity, information } = data
     const { data: response } = await Axios.post("/appointment", {
       publisherId,
-      designerId,
       projectId,
       meetDate,
       activity,

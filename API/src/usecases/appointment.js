@@ -106,9 +106,6 @@ exports.updateStatusAppointmentByAppointmentId = async (req, res) => {
     if (_.isEmpty(appointment)) {
       return errorResponse(res)(404);
     }
-    if (appointment.publisherId !== userId) {
-      return errorResponse(res)(403);
-    }
     appointment.status = status;
     await appointment.save();
     successResponse(res)(201);

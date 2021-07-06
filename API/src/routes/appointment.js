@@ -34,7 +34,7 @@ appointmentRoute.put(
 appointmentRoute.patch(
   "/:appointmentId",
   authenticate,
-  authorization([USER_ROLE.PUBLISHER]),
+  authorization([USER_ROLE.PUBLISHER, USER_ROLE.DESIGNER]),
   updateStatusAppointmentByAppointmentId
 );
 appointmentRoute.delete(

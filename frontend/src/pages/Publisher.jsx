@@ -18,8 +18,7 @@ import {
   Input,
   Select,
 } from "@chakra-ui/react"
-import { useState, useContext } from "react"
-import { StateContext } from "../store"
+import { useState } from "react"
 import { useEffect } from "react"
 import { getUsers } from "../api/user"
 import { PuzzleIcon } from "@heroicons/react/outline"
@@ -32,8 +31,7 @@ import dayjs from "dayjs"
 
 function RequestAppointment(props) {
   const { requestModal, setRequestModal, setSuccessModal } = props
-  const [state] = useContext(StateContext)
-  const publisherId = requestModal.publisherId
+  const [isLoading, setIsLoading] = useState(false)
   const schema = Joi.object({
     date: Joi.date().required(),
     time: Joi.string().required(),
@@ -65,17 +63,13 @@ function RequestAppointment(props) {
   const onSubmit = async (data) => {
     const times = data.time.split(":")
     const meetDate = dayjs(data.date).hour(times[0]).minute(times[1])
-    setRequestModal({ ...requestModal, isLoading: true })
-    const result = await storeAppointment({
-      ...data,
-      meetDate,
-      publisherId: publisherId,
-      designerId: state.currentUser.id,
-    })
+    setIsLoading(true)
+    const result = await storeAppointment({ ...data, meetDate, publisherId: requestModal.publisherId })
     console.log(result)
     if (result.success) {
-      setRequestModal({ ...requestModal, isOpen: false, isLoading: false })
+      setRequestModal({ ...requestModal, isOpen: false })
       setSuccessModal({ isOpen: true })
+      setIsLoading(false)
     }
   }
   return (
@@ -172,7 +166,7 @@ function RequestAppointment(props) {
             </form>
             <Flex mt="6" justify="end">
               <Button
-                isLoading={requestModal.isLoading}
+                isLoading={isLoading}
                 onClick={handleSubmit(onSubmit)}
                 size="md"
                 fontSize="sm"
