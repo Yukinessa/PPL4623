@@ -40,7 +40,7 @@ function SignUp() {
       .email({ tlds: { allow: false } })
       .required(),
     password: Joi.string().min(8).required(),
-    role: Joi.string().required().default("designer"),
+    role: Joi.string().required(),
     acceptTerms: Joi.boolean().required(),
   })
   const {
@@ -51,6 +51,9 @@ function SignUp() {
     setValue,
   } = useForm({
     resolver: joiResolver(schema),
+    defaultValues: {
+      role: "designer",
+    },
   })
   const setEmpty = () => {
     setValue("name", "")
