@@ -4,10 +4,9 @@ const { errorResponse, successResponse } = require("../helpers/response");
 
 exports.getProjects = async (req, res) => {
   try {
-    const { userId } = req.query;
-    const userQuery = !_.isEmpty(userId) ? { userId } : {};
+    const { id: userId } = req.user;
     const projects = await Project.findAll({
-      where: { ...userQuery },
+      where: { userId },
     });
     successResponse(res)(200, { data: projects });
   } catch (err) {

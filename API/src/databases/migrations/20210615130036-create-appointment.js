@@ -51,9 +51,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(50),
       },
-      location: {
+      information: {
         allowNull: false,
-        type: Sequelize.STRING(100),
+        type: Sequelize.TEXT,
       },
       status: {
         allowNull: false,

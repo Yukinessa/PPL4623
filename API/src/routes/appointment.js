@@ -9,9 +9,11 @@ const {
   updateAppointmentByAppointmentId,
   updateStatusAppointmentByAppointmentId,
   deleteAppointmentByAppointmentId,
+  getAppointmentToday,
 } = require("../usecases/appointment");
 
 appointmentRoute.get("/", authenticate, getAppointments);
+appointmentRoute.get("/today", authenticate, getAppointmentToday);
 appointmentRoute.post(
   "/",
   authenticate,

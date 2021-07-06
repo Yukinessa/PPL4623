@@ -14,6 +14,7 @@ function Dashboard(props) {
       if (result.success) {
         setLoading(false)
         dispatch({ type: "SET_CURRENT_USER", payload: result.data })
+        dispatch({ type: "SET_STATUS", payload: "authenticated" })
       }
     }
     GetCurrentUser()
@@ -28,8 +29,8 @@ function Dashboard(props) {
         <Flex direction="column">
           <Flex mt="52px">
             <Sidebar display={["none", null, "flex"]} />
-            <Flex ml={["none", null, "16%"]} overflow="auto" w="full">
-              <Box h="100vh" w="full" bg="gray.50" px={["2", "4"]} py="8">
+            <Flex ml={["none", null, "17%"]} overflow="auto" w="full" as="main">
+              <Box h="100vh" w="full" bg="gray.50" px={["3", "6"]} py="8">
                 {props.children}
               </Box>
             </Flex>

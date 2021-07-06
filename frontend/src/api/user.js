@@ -8,3 +8,13 @@ export const getCurrentUser = async () => {
     return err.response.data
   }
 }
+
+export const getUsers = async (query = {}) => {
+  try {
+    const { role } = query
+    const { data: response } = await Axios.get(`/user?role=${role}`)
+    return response
+  } catch (err) {
+    return err.response.data
+  }
+}

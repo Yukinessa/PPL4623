@@ -2,10 +2,10 @@ import { Flex, Heading, Text, Button, Image, Stack, HStack, VStack, Box, Icon } 
 import { HomeLayout } from "../components/layouts"
 import HeroImage from "../assets/hero.png"
 import { ChartSquareBarIcon, ChipIcon, ClipboardListIcon } from "@heroicons/react/outline"
-import { useHistory } from "react-router-dom"
+import { Link } from "react-router-dom"
+import { getToken } from "../helpers/token"
 
 function Hero() {
-  const history = useHistory()
   return (
     <Flex direction="column" mt={["16", "24"]} as="section">
       <Stack
@@ -25,9 +25,11 @@ function Hero() {
             amazing games
           </Text>
           <Flex mt="10">
-            <Button position="static" size="md" colorScheme="blue" fontSize="sm" onClick={() => history.push("signup")}>
-              Get Started
-            </Button>
+            <Link to={getToken() ? "dashboard" : "signup"}>
+              <Button position="static" size="md" colorScheme="blue" fontSize="sm">
+                Get Started
+              </Button>
+            </Link>
           </Flex>
         </Flex>
         <Flex direction="column" minW="58%">
