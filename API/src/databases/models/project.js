@@ -1,4 +1,7 @@
 "use strict";
+const _ = require("lodash");
+const { GAME_GENRE } = require("../../constants/project");
+
 const { Model, Sequelize } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Project extends Model {
@@ -30,11 +33,25 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      title: {
+      name: {
         allowNull: false,
         type: DataTypes.STRING,
       },
       description: {
+        allowNull: false,
+        type: DataTypes.TEXT,
+      },
+      genre: {
+        allowNull: false,
+        type: DataTypes.ENUM,
+        values: _.values(GAME_GENRE),
+        defaultValue: GAME_GENRE.ADVENTURE,
+      },
+      ageStrict: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      linkDownload: {
         allowNull: false,
         type: DataTypes.TEXT,
       },

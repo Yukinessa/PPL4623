@@ -99,7 +99,6 @@ exports.updateAppointmentByAppointmentId = async (req, res) => {
 
 exports.updateStatusAppointmentByAppointmentId = async (req, res) => {
   try {
-    const { id: userId } = req.user;
     const { appointmentId } = req.params;
     const { status } = req.body;
     const appointment = await Appointment.findByPk(appointmentId);

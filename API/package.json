@@ -7,7 +7,9 @@
     "start": "node ./server",
     "dev": "nodemon ./server",
     "db:migrate": "npx sequelize-cli db:migrate",
-    "db:reset": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate"
+    "db:reset": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate",
+    "db:seed": "npx sequelize-cli db:seed",
+    "db:seed:all": "npx sequelize-cli db:seed:all"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
