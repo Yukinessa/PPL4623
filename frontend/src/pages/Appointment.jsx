@@ -28,6 +28,7 @@ import { StateContext } from "../store"
 import { useState, useContext, useEffect } from "react"
 import { getAppointments, getAppointment, changeStatusAppointment } from "../api/appointment"
 import { utcToLocal } from "../helpers/date"
+import _ from "lodash"
 
 const useQuery = () => new URLSearchParams(useLocation().search)
 const status = {
@@ -58,7 +59,13 @@ const initAppointment = {
   status: "pending",
   activity: "",
   information: "",
-  project: {},
+  project: {
+    id: "",
+    name: "",
+    genre: "",
+    ageString: 0,
+    linkDownload: "",
+  },
   publisher: {
     name: "",
   },
@@ -67,8 +74,68 @@ const initAppointment = {
   },
 }
 
+function DetailProject(props) {
+  const { project, detailProjectModal, setDetailProjectModal } = props
+  const closeModal = () => {
+    setDetailProjectModal({ isOpen: false })
+  }
+  return (
+    <Flex direction="column">
+      <Modal onClose={closeModal} isOpen={detailProjectModal.isOpen} size="md">
+        <ModalOverlay />
+        <ModalContent pb="3">
+          <ModalHeader color="gray.600">Detail Projects</ModalHeader>
+          <ModalCloseButton _focus={{ boxShadow: "none" }} />
+          <ModalBody mt="2">
+            <Stack direction="column" spacing={4}>
+              <Stack direction="row" color="gray.600" fontSize="sm">
+                <Text fontWeight="medium" w="30%">
+                  Name
+                </Text>
+                <Text w="70%">{project.name}</Text>
+              </Stack>
+              <Stack direction="row" color="gray.600" fontSize="sm">
+                <Text fontWeight="medium" w="30%">
+                  Description
+                </Text>
+                <Text w="70%">{project.description}</Text>
+              </Stack>
+              <Stack direction="row" color="gray.600" fontSize="sm">
+                <Text fontWeight="medium" w="30%">
+                  Genre
+                </Text>
+                <Text w="70%">{project.genre}</Text>
+              </Stack>
+              <Stack direction="row" color="gray.600" fontSize="sm">
+                <Text fontWeight="medium" w="30%">
+                  Age Strict
+                </Text>
+                <Text w="70%">{project.ageStrict}</Text>
+              </Stack>
+              <Stack direction="row" color="gray.600" fontSize="sm">
+                <Text fontWeight="medium" w="30%">
+                  Link Download
+                </Text>
+                <Text w="70%">{project.linkDownload}</Text>
+              </Stack>
+            </Stack>
+          </ModalBody>
+          <ModalFooter mt="4">
+            <Flex>
+              <Button size="sm" onClick={closeModal}>
+                Close
+              </Button>
+            </Flex>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </Flex>
+  )
+}
+
 function DetailAppointment(props) {
-  const { detailModal, setDetailModal, appointment, setAppoinment, user, setQuery, query } = props
+  const { detailModal, setDetailModal, appointment, setAppoinment, user, setQuery, query, setDetailProjectModal } =
+    props
   const closeModal = () => {
     setDetailModal({ isOpen: false })
     setAppoinment({ ...appointment, data: { ...initAppointment } })
@@ -137,6 +204,29 @@ function DetailAppointment(props) {
                 </Stack>
               </Stack>
             )}
+            <Flex direction="column" mt="3">
+              {!appointment.isLoading && appointment.data.project.id !== "" && (
+                <Stack direction="column" spacing={4}>
+                  <Stack direction="row" color="gray.600" fontSize="sm" alignItems="center">
+                    <Text fontWeight="medium" w="30%">
+                      Projects
+                    </Text>
+                    <Flex w="70%">
+                      <Button
+                        variant="unstyled"
+                        size="sm"
+                        fontWeight="bold"
+                        _focus={{ boxShadow: "none" }}
+                        color="blue.500"
+                        onClick={() => setDetailProjectModal({ isOpen: true })}
+                      >
+                        {appointment.data.project.name}
+                      </Button>
+                    </Flex>
+                  </Stack>
+                </Stack>
+              )}
+            </Flex>
           </ModalBody>
           <ModalFooter mt="4">
             {user.role === "publisher" && appointment.data.status === "pending" && (
@@ -192,6 +282,7 @@ function Appointment() {
   const [appointment, setAppoinment] = useState({ data: { ...initAppointment }, isLoading: false })
   const [query, setQuery] = useState({ tab: 0 })
   const [detailModal, setDetailModal] = useState({ isOpen: false, isLoading: false })
+  const [detailProjectModal, setDetailProjectModal] = useState({ isOpen: false })
 
   useEffect(() => {
     const GetAppointments = async () => {
@@ -216,7 +307,18 @@ function Appointment() {
     setAppoinment({ ...appointment, isLoading: true })
     const result = await getAppointment(appointmentId)
     if (result.success) {
-      setAppoinment({ data: result.data, isLoading: false })
+      let dataApp = result.data
+      if (_.isEmpty(result.data.project)) {
+        const project = {
+          id: "",
+          name: "",
+          genre: "",
+          ageString: 0,
+          linkDownload: "",
+        }
+        dataApp = { ...dataApp, project }
+      }
+      setAppoinment({ data: dataApp, isLoading: false })
     }
   }
 
@@ -344,6 +446,13 @@ function Appointment() {
         appointment={appointment}
         setAppoinment={setAppoinment}
         user={state.currentUser}
+        detailProjectModal={detailProjectModal}
+        setDetailProjectModal={setDetailProjectModal}
+      />
+      <DetailProject
+        project={appointment.data.project}
+        detailProjectModal={detailProjectModal}
+        setDetailProjectModal={setDetailProjectModal}
       />
     </Flex>
   )

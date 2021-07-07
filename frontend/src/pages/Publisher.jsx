@@ -65,8 +65,8 @@ function RequestAppointment(props) {
     const times = data.time.split(":")
     const meetDate = dayjs(data.date).hour(times[0]).minute(times[1])
     setIsLoading(true)
+    console.log(requestModal.publisherId, data)
     const result = await storeAppointment({ ...data, meetDate, publisherId: requestModal.publisherId })
-    console.log(result)
     if (result.success) {
       setRequestModal({ ...requestModal, isOpen: false })
       setSuccessModal({ isOpen: true })
@@ -213,10 +213,9 @@ function Publisher() {
 
   const openRequestModal = async ({ publisherId, publisher }) => {
     setProjects({ ...projects, isLoading: true })
-    setRequestModal({ isOpen: true, publisher, publisherId })
     const result = await getProjects()
     if (result.success) {
-      console.log(result.data)
+      setRequestModal({ isOpen: true, publisher, publisherId })
       setProjects({ data: result.data, isLoading: false })
     }
   }
