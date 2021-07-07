@@ -28,4 +28,4 @@ Game Developer Connect adalah aplikasi yang menghubungkan antara game designer d
 - https://www.figma.com/file/4f6IgtELmUGcMOTwG6TI15/Untitled?node-id=0%3A1
 
 ## Platform 
-- Web
+- Website
