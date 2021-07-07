@@ -28,9 +28,10 @@ import { joiResolver } from "@hookform/resolvers/joi"
 import { storeAppointment } from "../api/appointment"
 import { SuccessModal } from "../components/molecules/modal"
 import dayjs from "dayjs"
+import { getProjects } from "../api/project"
 
 function RequestAppointment(props) {
-  const { requestModal, setRequestModal, setSuccessModal } = props
+  const { requestModal, setRequestModal, setSuccessModal, projects } = props
   const [isLoading, setIsLoading] = useState(false)
   const schema = Joi.object({
     date: Joi.date().required(),
@@ -141,8 +142,15 @@ function RequestAppointment(props) {
                       <Select
                         placeholder="Select Project"
                         {...register("projectId")}
+                        textTransform="capitalize"
                         isInvalid={errors.projectId}
-                      ></Select>
+                      >
+                        {projects.data.map((project) => (
+                          <option key={project.id} value={project.id}>
+                            {project.name}
+                          </option>
+                        ))}
+                      </Select>
                       <Text fontSize="sm" color="red.500">
                         {errors.projectId?.message}
                       </Text>
@@ -187,6 +195,8 @@ function Publisher() {
   const [users, setUsers] = useState({ data: [], isLoading: false, error: null })
   const [requestModal, setRequestModal] = useState({ isOpen: false, publisherId: "" })
   const [successModal, setSuccessModal] = useState({ isOpen: false })
+  const [projects, setProjects] = useState({ data: [], isLoading: false })
+
   useEffect(() => {
     const GetPubsliher = async () => {
       setUsers({ ...users, isLoading: true })
@@ -200,6 +210,17 @@ function Publisher() {
       setUsers({ data: [], isLoading: false, error: null })
     }
   }, [])
+
+  const openRequestModal = async ({ publisherId, publisher }) => {
+    setProjects({ ...projects, isLoading: true })
+    setRequestModal({ isOpen: true, publisher, publisherId })
+    const result = await getProjects()
+    if (result.success) {
+      console.log(result.data)
+      setProjects({ data: result.data, isLoading: false })
+    }
+  }
+
   return (
     <Flex direction="column">
       <Text color="gray.700" fontSize="2xl" fontWeight="medium">
@@ -222,7 +243,7 @@ function Publisher() {
                       {user.email}
                     </Text>
                     <Button
-                      onClick={() => setRequestModal({ isOpen: true, publisherId: user.id, publisher: user.name })}
+                      onClick={() => openRequestModal({ publisherId: user.id, publisher: user.name })}
                       mt="6"
                       size="sm"
                       fontSize="xs"
@@ -240,6 +261,7 @@ function Publisher() {
         requestModal={requestModal}
         setRequestModal={setRequestModal}
         setSuccessModal={setSuccessModal}
+        projects={projects}
       />
       <SuccessModal
         successModal={successModal}
