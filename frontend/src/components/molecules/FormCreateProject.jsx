@@ -31,8 +31,6 @@ const FormCreateProject = () => {
     },
   })
 
-  console.log("[LOG][RESOLVER]", joiResolver(schema))
-
   const closeModal = () => {
     setValue("name", "")
     setValue("description", "")
@@ -43,10 +41,8 @@ const FormCreateProject = () => {
   }
 
   const onSubmit = async (data) => {
-    console.log("[LOG][SUBMIT]", data)
     setIsLoading(true)
     const result = await storeProject({ ...data })
-    console.log(result)
     if (result.success) {
       setRequestModal({ ...requestModal, isOpen: false })
       setSuccessModal({ isOpen: true })
@@ -63,8 +59,10 @@ const FormCreateProject = () => {
                 Title
               </FormLabel>
               <Stack direction="column" w="75%">
-                <Input type="text" placeholder="Title of the project" {...register("name")} />
-                <Text fontSize="sm" color="red.500"></Text>
+                <Input type="text" placeholder="Title of the project" {...register("name")} isInvalid={errors.name} />
+                <Text fontSize="sm" color="red.500">
+                  {errors.name?.message}
+                </Text>
               </Stack>
             </Stack>
           </FormControl>
@@ -74,8 +72,14 @@ const FormCreateProject = () => {
                 Description
               </FormLabel>
               <Stack direction="column" w="75%">
-                <Textarea placeholder="Brief description of the project" {...register("description")} />
-                <Text fontSize="sm" color="red.500"></Text>
+                <Textarea
+                  placeholder="Brief description of the project"
+                  {...register("description")}
+                  isInvalid={errors.description}
+                />
+                <Text fontSize="sm" color="red.500">
+                  {errors.description?.message}
+                </Text>
               </Stack>
             </Stack>
           </FormControl>
@@ -85,14 +89,16 @@ const FormCreateProject = () => {
                 Genre
               </FormLabel>
               <Stack direction="column" w="75%">
-                <Select placeholder="Select the project genre" {...register("genre")}>
+                <Select placeholder="Select the project genre" {...register("genre")} isInvalid={errors.genre}>
                   {_.map(GAME_GENRE, (genre, id) => (
                     <option key={id} value={genre}>
                       {genre}
                     </option>
                   ))}
                 </Select>
-                <Text fontSize="sm" color="red.500"></Text>
+                <Text fontSize="sm" color="red.500">
+                  {errors.genre?.message}
+                </Text>
               </Stack>
             </Stack>
           </FormControl>
@@ -102,14 +108,16 @@ const FormCreateProject = () => {
                 Restriction
               </FormLabel>
               <Stack direction="column" w="75%">
-                <Select placeholder="Age restrictions" {...register("ageStrict")}>
+                <Select placeholder="Age restrictions" {...register("ageStrict")} isInvalid={errors.ageStrict}>
                   {_.map(GAME_AGE_RESTRICTIONS, (age, id) => (
                     <option key={id} value={age}>
                       {age}
                     </option>
                   ))}
                 </Select>
-                <Text fontSize="sm" color="red.500"></Text>
+                <Text fontSize="sm" color="red.500">
+                  {errors.ageStrict?.message}
+                </Text>
               </Stack>
             </Stack>
           </FormControl>
@@ -119,8 +127,15 @@ const FormCreateProject = () => {
                 Link Download
               </FormLabel>
               <Stack direction="column" w="75%">
-                <Input type="text" placeholder="Shareable link" {...register("linkDownload")} />
-                <Text fontSize="sm" color="red.500"></Text>
+                <Input
+                  type="text"
+                  placeholder="Shareable link"
+                  {...register("linkDownload")}
+                  isInvalid={errors.linkDownload}
+                />
+                <Text fontSize="sm" color="red.500">
+                  {errors.linkDownload?.message}
+                </Text>
               </Stack>
             </Stack>
           </FormControl>

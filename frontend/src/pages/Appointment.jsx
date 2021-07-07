@@ -291,10 +291,7 @@ function Appointment() {
         state.currentUser.role === "publisher"
           ? { publisherId: state.currentUser.id }
           : { designerId: state.currentUser.id }
-      const [result, projects] = await Promise.all([
-        getAppointments({ status: menus[query.tab].status, ...currentUser }),
-        getProjects(),
-      ])
+      const result = await getAppointments({ status: menus[query.tab].status, ...currentUser })
       if (result.success) {
         setAppoinments({ data: result.data, isLoading: false })
         console.log("[LOG][PROJECT]", projects)
